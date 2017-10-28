@@ -1,0 +1,13 @@
+.main-page__content {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.main-page__section {
+	height: 100vh;
+}
+
+.main-page__form {
+	width: 600px;
+	margin: 0 auto;
+}

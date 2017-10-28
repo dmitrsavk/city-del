@@ -1,0 +1,9 @@
+.section-order {
+	padding: 50px 0;
+}
+
+.section-order__content {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
