@@ -133,7 +133,7 @@ class OrderForm extends Component {
 						<Modal.Title>Ваша заявка принята</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						На email {this.email ? this.email.value : ''} выслано письмо с дальнейшими инструкциями. 
+						На email <b>{this.email ? this.email.value : ''}</b> выслано письмо с дальнейшими инструкциями. 
 					</Modal.Body>
 				</Modal>
 				<Modal show={this.state.showModal} onHide={this.hideModal}>
