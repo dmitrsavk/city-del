@@ -46,8 +46,37 @@
 }
 
 .form__date {
-	display: inline-block;
-	box-sizing: border-box;
-	width: 50%;
-	padding-left: 10px;
+	position: relative;
+}
+
+.form__date-wrap {
+	z-index: 1;
+	position: absolute;
+	width: 100%;
+	background-color: #EFF1F6;
+}
+
+.m-input-moment {
+	width: 100%;
+}
+
+@media screen and (max-width: 700px) {
+	.form__section {
+		box-sizing: border-box;
+		display: block;
+		width: 100%;
+	}
+
+	.form__section:nth-child(odd) {
+		padding-right: 0;
+	}
+
+	.form__section:nth-child(even) {
+		padding-left: 0;
+	}
+
+	.form__section_center {
+		display: block;
+		width: 100%;
+	}
 }
