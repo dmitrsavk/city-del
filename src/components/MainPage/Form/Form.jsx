@@ -5,7 +5,9 @@ import {
 	ControlLabel,
 	FormControl,
 	Button,
-	Form
+	Form,
+	Modal,
+	Panel
 } from 'react-bootstrap';
 
 import moment from 'moment';
@@ -20,10 +22,21 @@ class OrderForm extends Component {
 
 		this.state = {
 			loading: false,
+			showModal: false,
+			showSuccessModal: false,
 			openFirstDate: false,
 			openSecondDate: false,
 			firstDate: moment().locale('ru'),
-			secondDate: moment().locale('ru')
+			secondDate: moment().locale('ru'),
+			from: {
+				address: null,
+				phone: null
+			},
+			to: {
+				address: null,
+				phone: null
+			},
+			email: null
 		}
 
 		this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
@@ -31,6 +44,11 @@ class OrderForm extends Component {
 		this.handleSecondDateSave = this.handleSecondDateSave.bind(this);
 		this.handleFirstDateSave = this.handleFirstDateSave.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.hideModal = this.hideModal.bind(this);
+		this.showModal = this.showModal.bind(this);
+		this.send = this.send.bind(this);
+		this.hideSuccessModal = this.hideSuccessModal.bind(this);
+		this.showSuccessModal = this.showSuccessModal.bind(this);
 	}
 
 	handleSecondDateChange(moment) {
@@ -51,33 +69,144 @@ class OrderForm extends Component {
 
 	handleSubmit(event) {
         event.preventDefault();
-        console.log('submit')
+
+        if (this.validate()) {
+        	this.showModal();
+        }
     }
+
+    send() {
+    	console.log('send');
+    	this.setState({loading: true });
+    	setTimeout(() => {
+	      	// Completed of async action, set loading state back
+	      	this.setState({loading: false});
+	      	this.hideModal();
+	      	this.showSuccessModal();
+	    }, 2000);
+    }
+
+    validate() {
+    	const fromAddressIsValid = this.from.value.length !== 0;
+    	const toAddressIsValid = this.to.value.length !== 0;
+    	const fromPhoneIsValid = this.fromPhone.value.length !== 0;
+    	const toPhoneIsValid = this.toPhone.value.length !== 0;
+
+    	this.setState({
+    		from: {
+    			address: fromAddressIsValid ? null : 'error',
+    			phone: fromPhoneIsValid ? null : 'error'
+    		},
+    		to: {
+    			address: toAddressIsValid ? null : 'error',
+    			phone: toPhoneIsValid ? null : 'error'
+    		}
+    	});
+
+    	return fromAddressIsValid &&
+			toAddressIsValid &&
+			fromPhoneIsValid &&
+			toPhoneIsValid;	
+	}
+
+	showModal() {
+		this.setState({showModal: true});
+	}
+
+	hideModal() {
+		this.setState({showModal: false})
+	}
+
+	showSuccessModal() {
+		this.setState({showSuccessModal: true})
+	}
+
+	hideSuccessModal() {
+		this.setState({showSuccessModal: false})
+	}
 
 	render() {
 		return (
 			<Form className='form' onSubmit={this.handleSubmit}>
+				<Modal show={this.state.showSuccessModal} onHide={this.hideSuccessModal}>
+					<Modal.Header closeButton>
+						<Modal.Title>Ваша заявка принята</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						На email {this.email ? this.email.value : ''} выслано письмо с дальнейшими инструкциями. 
+					</Modal.Body>
+				</Modal>
+				<Modal show={this.state.showModal} onHide={this.hideModal}>
+					<Modal.Header closeButton>
+						<Modal.Title>Подтвердите заявку</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<Panel header='Откуда' bsStyle='primary'>
+							<Panel header='Адрес'>
+								{this.from ? this.from.value : ''}
+						    </Panel>
+						    <Panel header='Номер телефона'>
+						    	{this.fromPhone ? this.fromPhone.value : ''}
+						    </Panel>
+						    <Panel header='Дата'>
+						    	{this.state.firstDate.format('LLLL')}
+						    </Panel>
+					    </Panel>
+					    <Panel header='Откуда' bsStyle='primary'>
+					    	<Panel header='Адрес'>
+					    		{this.to ? this.to.value : ''}
+						    </Panel>
+						    <Panel header='Номер телефона'>
+						    	{this.toPhone ? this.toPhone.value : ''}
+						    </Panel>
+						    <Panel header='Дата'>
+						    	{this.state.secondDate.format('LLLL')}
+						    </Panel>
+					    </Panel>
+					    <Panel header='Информация о заказе' bsStyle='primary'>
+					    	<Panel header='Email'>
+					    		{this.email ? this.email.value : ''}
+						    </Panel>
+						    <Panel header='Пожелания к заказу'>
+						    	{this.info ? this.info.value : ''}
+						    </Panel>
+					    </Panel>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button onClick={this.hideModal}>Отменить</Button>
+						<Button
+							onClick={!this.state.loading ? this.send : null}
+							disabled={this.state.loading}
+						>
+							Отправить заявку
+						</Button>
+					</Modal.Footer>
+				</Modal>
 				<div className='form__section'>
 					<div className='form__label'>Откуда</div>
 
 					<FormGroup
 						controlId='address'
 						className='form__address'
+						validationState={this.state.from.address}
 					>
 						<ControlLabel>Адрес</ControlLabel>
 						<FormControl
 							type='text'
 							placeholder='Несвижский переулок, 10'
+							inputRef={ref => { this.from = ref; }}
 						/>
 					</FormGroup>
 					<FormGroup
 						controlId='phone'
 						className='form__phone'
+						validationState={this.state.from.phone}
 					>
 						<ControlLabel>Телефон</ControlLabel>
 						<FormControl
 							type='text'
 							placeholder='+7 (964) 782-07-25'
+							inputRef={ref => { this.fromPhone = ref; }}
 						/>
 					</FormGroup>
 					<FormGroup
@@ -115,21 +244,25 @@ class OrderForm extends Component {
 					<FormGroup
 						controlId='address'
 						className='form__address'
+						validationState={this.state.to.address}
 					>
 						<ControlLabel>Адрес</ControlLabel>
 						<FormControl
 							type='text'
 							placeholder='Несвижский переулок, 10'
+							inputRef={ref => { this.to = ref; }}
 						/>
 					</FormGroup>
 					<FormGroup
 						controlId='phone'
 						className='form__phone'
+						validationState={this.state.to.phone}
 					>
 						<ControlLabel>Телефон</ControlLabel>
 						<FormControl
 							type='text'
 							placeholder='+7 (964) 782-07-25'
+							inputRef={ref => { this.toPhone = ref; }}
 						/>
 					</FormGroup>
 					<FormGroup
@@ -173,6 +306,7 @@ class OrderForm extends Component {
 						<FormControl
 							type='email'
 							placeholder='support@citydeliver.ru'
+							inputRef={ref => { this.email = ref; }}
 						/>
 					</FormGroup>
 					<FormGroup
@@ -183,6 +317,7 @@ class OrderForm extends Component {
 							className='form__info'
 							componentClass='textarea'
 							placeholder='За час до прибытия курьера позвоните. Будьте аккуратнее, хрупкий товар'
+							inputRef={ref => { this.info = ref; }}
 						/>
 					</FormGroup>
 					<div className='form__button-wrap'>
