@@ -80,12 +80,23 @@ class OrderForm extends Component {
     	this.setState({loading: true });
 
     	const data = {
-
-    	}
+    		from: {
+    			address: this.from ? this.from.value : '',
+    			phone: this.fromPhone ? this.fromPhone.value : '',
+    			date: this.state.firstDate.format('LLLL')
+    		},
+    		to: {
+    			address: this.to ? this.to.value : '',
+    			phone: this.toPhone ? this.toPhone.value : '',
+    			date: this.state.secondDate.format('LLLL')
+    		},
+    		email: this.email ? this.email.value : '',
+    		info: this.info ? this.info.value : ''
+    	};
 
 	    fetch('http://localhost:3001/', {
 	    	method: 'post',
-            body: {test: 'test'},
+            body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
             }
