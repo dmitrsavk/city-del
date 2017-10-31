@@ -14,6 +14,7 @@ import moment from 'moment';
 import 'moment/locale/ru';
 import InputMoment from 'input-moment';
 import 'input-moment/dist/input-moment.css'
+
 import './Form.css';
 
 class OrderForm extends Component {
@@ -76,14 +77,26 @@ class OrderForm extends Component {
     }
 
     send() {
-    	console.log('send');
     	this.setState({loading: true });
-    	setTimeout(() => {
-	      	// Completed of async action, set loading state back
-	      	this.setState({loading: false});
+
+    	const data = {
+
+    	}
+
+	    fetch('http://localhost:3001/', {
+	    	method: 'post',
+            body: {test: 'test'},
+            headers: {
+                'Content-Type': 'application/json'
+            }
+	    })
+	    .then(res => res.json())
+	    .then(json => {
+	    	this.setState({loading: false});
 	      	this.hideModal();
 	      	this.showSuccessModal();
-	    }, 2000);
+	    })
+
     }
 
     validate() {
@@ -152,7 +165,7 @@ class OrderForm extends Component {
 						    	{this.state.firstDate.format('LLLL')}
 						    </Panel>
 					    </Panel>
-					    <Panel header='Откуда' bsStyle='primary'>
+					    <Panel header='Куда' bsStyle='primary'>
 					    	<Panel header='Адрес'>
 					    		{this.to ? this.to.value : ''}
 						    </Panel>
