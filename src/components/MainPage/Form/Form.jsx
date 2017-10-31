@@ -94,7 +94,7 @@ class OrderForm extends Component {
     		info: this.info ? this.info.value : ''
     	};
 
-	    fetch('http://localhost:3001/', {
+	    fetch('http://citydeliver.ru:3001', {
 	    	method: 'post',
             body: JSON.stringify(data),
             headers: {
