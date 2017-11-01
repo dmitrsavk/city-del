@@ -37,7 +37,9 @@ class OrderForm extends Component {
 				address: null,
 				phone: null
 			},
-			email: null
+			email: null,
+			fromPhoneValue: '',
+			toPhoneValue: ''
 		}
 
 		this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
@@ -50,6 +52,8 @@ class OrderForm extends Component {
 		this.send = this.send.bind(this);
 		this.hideSuccessModal = this.hideSuccessModal.bind(this);
 		this.showSuccessModal = this.showSuccessModal.bind(this);
+		this.handleFromPhone = this.handleFromPhone.bind(this);
+		this.handleToPhone = this.handleToPhone.bind(this);
 	}
 
 	handleSecondDateChange(moment) {
@@ -113,8 +117,8 @@ class OrderForm extends Component {
     validate() {
     	const fromAddressIsValid = this.from.value.length !== 0;
     	const toAddressIsValid = this.to.value.length !== 0;
-    	const fromPhoneIsValid = this.fromPhone.value.length !== 0;
-    	const toPhoneIsValid = this.toPhone.value.length !== 0;
+    	const fromPhoneIsValid = this.isPhoneValid(this.fromPhone.value);;
+    	const toPhoneIsValid = this.isPhoneValid(this.toPhone.value);;
 
     	this.setState({
     		from: {
@@ -130,7 +134,7 @@ class OrderForm extends Component {
     	return fromAddressIsValid &&
 			toAddressIsValid &&
 			fromPhoneIsValid &&
-			toPhoneIsValid;	
+			toPhoneIsValid;
 	}
 
 	showModal() {
@@ -147,6 +151,31 @@ class OrderForm extends Component {
 
 	hideSuccessModal() {
 		this.setState({showSuccessModal: false})
+	}
+
+	isPhoneValid(value) {
+		const digitRegex = /^\d+$/;
+        return digitRegex.test(value);
+	}
+
+	handleFromPhone(event) {
+		const digitRegex = /^\d+$/;
+
+        if (digitRegex.test(event.target.value) || event.target.value === '') {
+        	this.setState({
+        		fromPhoneValue: event.target.value
+        	});
+        };
+	}
+
+	handleToPhone(event) {
+		const digitRegex = /^\d+$/;
+
+        if (digitRegex.test(event.target.value) || event.target.value === '') {
+        	this.setState({
+        		toPhoneValue: event.target.value
+        	});
+        };
 	}
 
 	render() {
@@ -217,7 +246,7 @@ class OrderForm extends Component {
 						<ControlLabel>Адрес</ControlLabel>
 						<FormControl
 							type='text'
-							placeholder='Несвижский переулок, 10'
+							placeholder='Несвижский переулок, 2'
 							inputRef={ref => { this.from = ref; }}
 						/>
 					</FormGroup>
@@ -229,8 +258,10 @@ class OrderForm extends Component {
 						<ControlLabel>Телефон</ControlLabel>
 						<FormControl
 							type='text'
-							placeholder='+7 (964) 782-07-25'
+							placeholder='89657820725'
 							inputRef={ref => { this.fromPhone = ref; }}
+							value={this.state.fromPhoneValue}
+							onChange={this.handleFromPhone}
 						/>
 					</FormGroup>
 					<FormGroup
@@ -273,7 +304,7 @@ class OrderForm extends Component {
 						<ControlLabel>Адрес</ControlLabel>
 						<FormControl
 							type='text'
-							placeholder='Несвижский переулок, 10'
+							placeholder='Несвижский переулок, 4'
 							inputRef={ref => { this.to = ref; }}
 						/>
 					</FormGroup>
@@ -285,8 +316,10 @@ class OrderForm extends Component {
 						<ControlLabel>Телефон</ControlLabel>
 						<FormControl
 							type='text'
-							placeholder='+7 (964) 782-07-25'
+							placeholder='89661445646'
 							inputRef={ref => { this.toPhone = ref; }}
+							value={this.state.toPhoneValue}
+							onChange={this.handleToPhone}
 						/>
 					</FormGroup>
 					<FormGroup
@@ -296,7 +329,7 @@ class OrderForm extends Component {
 						<ControlLabel>Дата</ControlLabel>
 						<FormControl
 							type='text'
-							placeholder='Вторник, 12 ноября'
+							placeholder='Среда, 13 ноября'
 							onClick={() => this.setState({
 								openSecondDate: !this.state.openSecondDate,
 								openFirstDate: false
