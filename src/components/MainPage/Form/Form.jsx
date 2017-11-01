@@ -39,7 +39,8 @@ class OrderForm extends Component {
 			},
 			email: null,
 			fromPhoneValue: '',
-			toPhoneValue: ''
+			toPhoneValue: '',
+			dateValid: null
 		}
 
 		this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
@@ -117,8 +118,9 @@ class OrderForm extends Component {
     validate() {
     	const fromAddressIsValid = this.from.value.length !== 0;
     	const toAddressIsValid = this.to.value.length !== 0;
-    	const fromPhoneIsValid = this.isPhoneValid(this.fromPhone.value);;
-    	const toPhoneIsValid = this.isPhoneValid(this.toPhone.value);;
+    	const fromPhoneIsValid = this.isPhoneValid(this.fromPhone.value);
+    	const toPhoneIsValid = this.isPhoneValid(this.toPhone.value);
+    	const dateIsValid = this.isDateValid();
 
     	this.setState({
     		from: {
@@ -128,13 +130,15 @@ class OrderForm extends Component {
     		to: {
     			address: toAddressIsValid ? null : 'error',
     			phone: toPhoneIsValid ? null : 'error'
-    		}
+    		},
+    		dateValid: dateIsValid ? null : 'error'
     	});
 
     	return fromAddressIsValid &&
 			toAddressIsValid &&
 			fromPhoneIsValid &&
-			toPhoneIsValid;
+			toPhoneIsValid &&
+			dateIsValid;
 	}
 
 	showModal() {
@@ -176,6 +180,13 @@ class OrderForm extends Component {
         		toPhoneValue: event.target.value
         	});
         };
+	}
+
+	isDateValid() {
+		const now = moment().locale('ru');
+		return this.state.firstDate > now &&
+			this.state.secondDate > now &&
+			this.state.secondDate > this.state.firstDate;
 	}
 
 	render() {
@@ -267,6 +278,7 @@ class OrderForm extends Component {
 					<FormGroup
 						controlId='time'
 						className='form__date'
+						validationState={this.state.dateValid}
 					>
 						<ControlLabel>Дата</ControlLabel>
 						<FormControl
@@ -325,6 +337,7 @@ class OrderForm extends Component {
 					<FormGroup
 						controlId='time'
 						className='form__date'
+						validationState={this.state.dateValid}
 					>
 						<ControlLabel>Дата</ControlLabel>
 						<FormControl
