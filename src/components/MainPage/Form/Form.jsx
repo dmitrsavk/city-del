@@ -40,7 +40,8 @@ class OrderForm extends Component {
 			email: null,
 			fromPhoneValue: '',
 			toPhoneValue: '',
-			dateValid: null
+			dateValid: null,
+			emailValid: null
 		}
 
 		this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
@@ -121,6 +122,7 @@ class OrderForm extends Component {
     	const fromPhoneIsValid = this.isPhoneValid(this.fromPhone.value);
     	const toPhoneIsValid = this.isPhoneValid(this.toPhone.value);
     	const dateIsValid = this.isDateValid();
+    	const emailIsValid = this.email.value.length !== 0;
 
     	this.setState({
     		from: {
@@ -131,14 +133,16 @@ class OrderForm extends Component {
     			address: toAddressIsValid ? null : 'error',
     			phone: toPhoneIsValid ? null : 'error'
     		},
-    		dateValid: dateIsValid ? null : 'error'
+    		dateValid: dateIsValid ? null : 'error',
+    		emailValid: emailIsValid ? null : 'error'
     	});
 
     	return fromAddressIsValid &&
 			toAddressIsValid &&
 			fromPhoneIsValid &&
 			toPhoneIsValid &&
-			dateIsValid;
+			dateIsValid &&
+			emailIsValid;
 	}
 
 	showModal() {
@@ -371,6 +375,7 @@ class OrderForm extends Component {
 					<FormGroup
 						controlId='time'
 						className='form__email'
+						validationState={this.state.emailValid}
 					>
 						<ControlLabel>Ваш email</ControlLabel>
 						<FormControl
