@@ -272,7 +272,7 @@ class OrderForm extends Component {
 					>
 						<ControlLabel>Телефон</ControlLabel>
 						<FormControl
-							type='text'
+							type='tel'
 							placeholder='89657820725'
 							inputRef={ref => { this.fromPhone = ref; }}
 							value={this.state.fromPhoneValue}
@@ -331,7 +331,7 @@ class OrderForm extends Component {
 					>
 						<ControlLabel>Телефон</ControlLabel>
 						<FormControl
-							type='text'
+							type='tel'
 							placeholder='89661445646'
 							inputRef={ref => { this.toPhone = ref; }}
 							value={this.state.toPhoneValue}
