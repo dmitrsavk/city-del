@@ -246,7 +246,7 @@ class OrderForm extends Component {
 							onClick={!this.state.loading ? this.send : null}
 							disabled={this.state.loading}
 						>
-							Отправить заявку
+							Отправить
 						</Button>
 					</Modal.Footer>
 				</Modal>
