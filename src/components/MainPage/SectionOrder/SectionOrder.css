@@ -1,6 +1,6 @@
 .section-order {
 	padding: 50px 0;
-	height: calc(100vh - 100px);
+	min-height: calc(100vh - 100px);
 }
 
 .section-order__content {

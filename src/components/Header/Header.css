@@ -3,6 +3,8 @@
 	margin: 0 auto;
 	height: 100%;
 
+	padding: 0 15px;
+
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -30,3 +32,8 @@
 	color: #fff;
 }
 
+@media screen and (max-width: 1200px) {
+	.header {
+		width: 100%;
+	}
+}
