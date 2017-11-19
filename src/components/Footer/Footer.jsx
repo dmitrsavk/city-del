@@ -6,10 +6,7 @@ class Footer extends Component {
 	render() {
 		return (
 			<div className='footer'>
-				<div className='footer__content'>
-					<div className='footer__header'>
-						Контакты:
-					</div>
+				<div className='footer__content'>	
 					<div className='footer__info-item'>
 						Email: support@citydeliver.ru
 					</div>

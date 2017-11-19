@@ -1,2 +1,19 @@
-.App {
+#root {
+	font-family: 'Roboto', Arial, sans-serif;
+}
+
+@font-face {
+    font-family: 'Roboto';
+
+    src: url('fonts/Roboto-Bold-webfont.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Regular-webfont.woff') format('woff');
+
+    font-weight: normal;
+    font-style: normal;
 }

@@ -1,0 +1,24 @@
+.contacts-section {
+	max-width: 600px;
+	margin: 0 auto 80px auto;
+	padding: 80px 20px 0;
+	text-align: center;
+}
+
+.contacts-section__header {
+	margin-bottom: 20px;
+	font-size: 36px;
+	line-height: 36px;
+	font-weight: 600;
+}
+
+.contacts-section__description {
+	margin-bottom: 30px;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+.contacts-section__address {
+	font-size: 18px;
+	line-height: 28px;	
+}

@@ -1,0 +1,98 @@
+.instruction-section {
+	max-width: 1200px;
+	margin: 0 auto 80px auto;
+	padding: 80px 20px 0;
+}
+
+.instruction-section__header {
+	margin-bottom: 80px;
+
+	font-size: 42px;
+	line-height: 52px;
+	font-weight: 600;
+	text-align: center;
+}
+
+.instruction-section__description {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.instruction-section__description-item {
+	width: 33%;
+	box-sizing: border-box;
+	margin: 0 20px;
+}
+
+.instruction-section__description-item:first-child {
+	margin-left: 0;
+}
+
+.instruction-section__description-item:last-child {
+	margin-right: 0;
+}
+
+.instruction-section__description-item-header {
+	margin-bottom: 10px;
+}
+
+.instruction-section__description-item-header-logo {
+	position: relative;
+
+	float: left;
+
+	width: 45px;
+	height: 45px;
+
+	border-radius: 50%;
+
+	font-size: 20px;
+	line-height: 45px;
+	font-weight: 600;
+	color: #fff;
+	background-color: #000;
+
+	text-align: center;
+}
+
+.instruction-section__description-item-header-text {
+	padding-left: 65px;
+	font-size: 24px;
+	line-height: 32px;
+	font-weight: 600;
+}
+
+.instruction-section__description-item-text {
+	padding-left: 65px;
+	font-size: 16px;
+	line-height: 23px;
+}
+
+@media screen and (max-width: 700px) {
+	.instruction-section {
+		margin-bottom: 20px;
+		padding-top: 40px;
+	}
+
+	.instruction-section__description {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+
+	.instruction-section__description-item {
+		width: 100%;
+		margin: 0 0 20px 0;
+	}
+
+	.instruction-section__description-item:last-child {
+		margin-bottom: 0;
+	}
+
+	.instruction-section__header {
+		margin-bottom: 30px;
+		font-size: 36px;
+		line-height: 36px;
+	}
+}

@@ -11,15 +11,33 @@
 	align-items: center;
 
 	color: #dedede;
-	font-size: 24px;
+	font-size: 18px;
 }
 
 .header__logo {
 	line-height: 100%;
 }
 
+.header__links {
+	display: flex;
+	flex-direction: row;
+}
+
 .header__link {
+	cursor: pointer;
 	color: #dedede;
+}
+
+.header__link-wrap {
+	margin: 0 10px;
+}
+
+.header__link-wrap:first-child {
+	margin-left: 0;
+}
+
+.header__link-wrap:last-child {
+	margin-right: 0;
 }
 
 .header__link:hover {
@@ -35,5 +53,15 @@
 @media screen and (max-width: 1200px) {
 	.header {
 		width: 100%;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.header__link-wrap:nth-child(1) {
+		display: none;
+	}
+
+	.header__link-wrap:nth-child(2) {
+		display: none;
 	}
 }
