@@ -25,20 +25,13 @@ const sendMail = (req, res) => {
         }
     });
 
-    const maximum = 999999;
-    const minimum = 100000;
-
-    let orderNumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-    orderNumber = orderNumber.toString();
-    orderNumber = orderNumber.slice(0, 3) + ' ' + orderNumber.slice(3);
-
     let mailOptions = {
         from: 'support@citydeliver.ru',
         to: 'support@citydeliver.ru',
         subject: 'Заявка',
         text: '',
         html: `
-            <b>Номер заказа:</b> ${orderNumber}<br/>
+            <b>Номер заказа:</b> ${req.body.orderNumber}<br/>
             <b>Откуда:</b><br />
                 Адрес: ${req.body.from.address}<br />
                 Телефон: ${req.body.from.phone}<br />

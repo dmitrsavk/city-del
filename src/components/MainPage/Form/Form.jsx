@@ -41,7 +41,8 @@ class OrderForm extends Component {
 			fromPhoneValue: '',
 			toPhoneValue: '',
 			dateValid: null,
-			emailValid: null
+			emailValid: null,
+			orderNumber: null
 		}
 
 		this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
@@ -85,7 +86,17 @@ class OrderForm extends Component {
     send() {
     	this.setState({loading: true });
 
+    	const maximum = 999999;
+	    const minimum = 100000;
+
+	    let orderNumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+	    orderNumber = orderNumber.toString();
+	    orderNumber = orderNumber.slice(0, 3) + ' ' + orderNumber.slice(3);
+
+	    this.setState({orderNumber});
+
     	const data = {
+    		orderNumber: orderNumber,
     		from: {
     			address: this.from ? this.from.value : '',
     			phone: this.fromPhone ? this.fromPhone.value : '',
@@ -202,6 +213,7 @@ class OrderForm extends Component {
 					</Modal.Header>
 					<Modal.Body>
 						Спасибо за заявку!<br/>
+						Номер заказа - <b>{this.state.orderNumber}</b>
 						В течении 5 минут, с вами свяжется диспетчер 
 					</Modal.Body>
 				</Modal>
