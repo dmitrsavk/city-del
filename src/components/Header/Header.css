@@ -64,4 +64,8 @@
 	.header__link-wrap:nth-child(2) {
 		display: none;
 	}
+
+	.header__link-wrap:last-child {
+		display: block;
+	}
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {Parallax} from 'react-parallax'
+import {Parallax} from 'react-parallax';
 
 import './PictureSection.css';
 import city from './city.jpeg';

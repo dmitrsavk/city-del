@@ -4,18 +4,18 @@ import {Button} from 'react-bootstrap';
 
 import './DivideSection.css';
 
+import Business from '../Business.svg';
+import Faces from '../Faces.svg';
+
 class DivideSection extends Component {
 	render() {
 		return (
 			<div className='divide-section'>
-				<div className='divide-section__description'>
-					В таком большом городе как Москва, добраться из одной точки в другую занимает немало времени. 
-					Перевозка документов из офиса в офис сильно изматывает. Поездки в магазины, покупки цветов и 
-					подарков отнимают досуг, который не хочется тратить в пустую. Вот почему мы предлагаем вам 
-					воспользоваться услугами нашей службы и сэкономить много времени. 
-				</div>
 				<div className='divide-section__columns'>
 					<div className='divide-section__column'>
+						<div className='divide-section__column-header-logo'>
+							<img alt='img' src={Business} />
+						</div>
 						<div className='divide-section__column-header'>
 							Доставка для бизнеса
 						</div>
@@ -27,6 +27,9 @@ class DivideSection extends Component {
 						</div>
 					</div>
 					<div className='divide-section__column'>
+						<div className='divide-section__column-header-logo'>
+							<img alt='img' src={Faces} />
+						</div>
 						<div className='divide-section__column-header'>
 							Доставка для частных лиц
 						</div>

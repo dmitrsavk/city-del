@@ -20,8 +20,7 @@ class InstructionSection extends Component {
 							</div>
 						</div>
 						<div className='instruction-section__description-item-text'>
-							Просто напишите адрес отправления и адрес получения и программа рассчитает стоимость
-							автоматически. Укажите вид товара, сроки и пожелания к заказу.
+							Напишите адреса отправления и получения. Укажите время, вид товара и пожелания к заказу.
 						</div>
 					</div>
 					<div className='instruction-section__description-item'>

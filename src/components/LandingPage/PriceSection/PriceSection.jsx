@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap';
 
 import './PriceSection.css';
 
-import speed from '../FeatureSection/speed.svg';
+import gabarit from '../Gabarit.svg';
+import cost from '../Cost.svg';
 
 class PriceSection extends Component {
 	render() {
@@ -12,7 +12,7 @@ class PriceSection extends Component {
 				<div className='price-section__content'>
 					<div className='price-section__item'>
 						<div className='price-section__item-image'>
-							<img alt='img' src={speed} />
+							<img alt='img' src={gabarit} />
 						</div>
 						<div className='price-section__item-header'>
 							Габариты и вес
@@ -24,7 +24,7 @@ class PriceSection extends Component {
 					</div>
 					<div className='price-section__item'>
 						<div className='price-section__item-image'>
-							<img alt='img' src={speed} />
+							<img alt='img' src={cost} />
 						</div>
 						<div className='price-section__item-header'>
 							Стоимость
@@ -39,11 +39,6 @@ class PriceSection extends Component {
 							(точную стоимость вам сообщит <br/>оператор)
 						</div>
 					</div>
-				</div>
-				<div className='price-section__button-wrap'>
-					<Button bsSize='large' href='/order' className='price-section__button'>
-				        Оформить заказ
-					</Button>
 				</div>
 			</div>
 		);

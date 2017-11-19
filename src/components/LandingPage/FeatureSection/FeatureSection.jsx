@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import './FeatureSection.css';
 
-import speed from './speed.svg';
-import security from './security.svg';
-import cost from './cost.svg';
+import speed from '../Speed.svg';
+import security from '../Hope.svg';
+import cost from '../Cost.svg';
 
 class FeatureSection extends Component {
 	render() {

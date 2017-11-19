@@ -28,8 +28,21 @@ const sendMail = (req, res) => {
     let mailOptions = {
         from: 'support@citydeliver.ru',
         to: 'support@citydeliver.ru',
-        subject: 'Hello',
-        text: JSON.stringify(req.body)
+        subject: 'Заявка',
+        text: '',
+        html: `
+            <b>Откуда:</b><br />
+                Адрес: ${req.body.from.address}<br />
+                Телефон: ${req.body.from.phone}<br />
+                Дата: ${req.body.from.date}<br /><br />
+            <b>Куда:</b><br />
+                Адрес: ${req.body.to.address}<br />
+                Телефон: ${req.body.to.phone}<br />
+                Дата: ${req.body.to.date}<br /><br />
+            Дополнительная информация:<br />
+                email: ${req.body.email}<br/>
+                Описание: ${req.body.info}
+        `;
     };
 
     transporter.sendMail(mailOptions, (error, info) => {

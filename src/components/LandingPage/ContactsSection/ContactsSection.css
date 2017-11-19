@@ -1,7 +1,7 @@
 .contacts-section {
 	max-width: 600px;
 	margin: 0 auto 80px auto;
-	padding: 80px 20px 0;
+	padding: 0 20px 0;
 	text-align: center;
 }
 
@@ -13,7 +13,7 @@
 }
 
 .contacts-section__description {
-	margin-bottom: 30px;
+	margin-bottom: 80px;
 	font-size: 24px;
 	line-height: 24px;
 }

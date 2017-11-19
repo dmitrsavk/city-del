@@ -58,6 +58,34 @@
 	margin: 0 auto 80px auto;
 }
 
+.divide-section__column-header-logo {
+	width: 100px;
+	height: 100px;
+	margin-bottom: 20px;
+}
+
+.divide-section__parallax-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 50vh;
+	color: #fff;
+	text-align: center;
+	padding: 0 20px;
+}
+
+.divide-section__parallax-content-description {
+	max-width: 600px;
+	margin: 0 auto;
+	font-size: 24px;
+	font-weight: 300;
+	line-height: 24px;
+}
+
+.divide-section__parallax-image {
+	background-color: #000;
+}
+
 @media screen and (max-width: 700px) {
 	.divide-section {
 		margin-bottom: 20px;
