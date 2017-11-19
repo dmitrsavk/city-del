@@ -42,7 +42,7 @@ const sendMail = (req, res) => {
             Дополнительная информация:<br />
                 email: ${req.body.email}<br/>
                 Описание: ${req.body.info}
-        `;
+        `
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
