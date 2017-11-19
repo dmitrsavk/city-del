@@ -213,7 +213,7 @@ class OrderForm extends Component {
 					</Modal.Header>
 					<Modal.Body>
 						Спасибо за заявку!<br/>
-						Номер заказа - <b>{this.state.orderNumber}</b>
+						Номер заказа - <b>{this.state.orderNumber}</b><br/>
 						В течении 5 минут, с вами свяжется диспетчер 
 					</Modal.Body>
 				</Modal>
