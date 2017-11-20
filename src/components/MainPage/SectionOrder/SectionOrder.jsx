@@ -8,9 +8,9 @@ class SectionOrder extends Component {
 		return (
 			<div className='section-order'>
 				<div className='section-order__content'>
-					<div className='section-order__form-header'>
+					<h1 className='section-order__form-header'>
 						Офомление заказа
-					</div>
+					</h1>
 					<div className='section-order__form'>
 						<Form />
 					</div>

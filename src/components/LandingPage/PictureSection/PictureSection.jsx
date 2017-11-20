@@ -20,9 +20,9 @@ class PictureSection extends Component {
 						<div className='picture-section__parallax-content-header'>
 							МИССИЯ НАШЕЙ КОМПАНИИ
 						</div>
-						<div className='picture-section__parallax-content-description'>
+						<h1 className='picture-section__parallax-content-description'>
 							доставка по городу для бизнеса и частных лиц
-						</div>
+						</h1>
 					</div>
 				</Parallax>
 			</div>
