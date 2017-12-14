@@ -42,8 +42,7 @@ class OrderForm extends Component {
 
 		this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
 		this.handleFirstDateChange = this.handleFirstDateChange.bind(this);
-		this.handleSecondDateSave = this.handleSecondDateSave.bind(this);
-		this.handleFirstDateSave = this.handleFirstDateSave.bind(this);
+;
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.hideModal = this.hideModal.bind(this);
 		this.showModal = this.showModal.bind(this);
@@ -60,14 +59,6 @@ class OrderForm extends Component {
 
 	handleFirstDateChange(moment) {
 		this.setState({firstDate: moment});
-	}
-
-	handleSecondDateSave(moment) {
-		this.setState({openSecondDate: !this.state.openSecondDate});
-	}
-
-	handleFirstDateSave(moment) {
-		this.setState({openFirstDate: !this.state.openFirstDate});
 	}
 
 	handleSubmit(event) {
@@ -194,6 +185,7 @@ class OrderForm extends Component {
 
 	isDateValid() {
 		const now = new Date();
+
 		return this.state.firstDate > now &&
 			this.state.secondDate > now &&
 			this.state.secondDate > this.state.firstDate;
@@ -288,10 +280,22 @@ class OrderForm extends Component {
 						/>
 					</FormGroup>
 					<div className='form__date'>
-						<DatePicker
-							onChange={this.handleFirstDateChange}
-							value={this.state.firstDate}
-				        />
+						<div className='form__date-day'>
+							<div className='form__date-label'>
+								День
+							</div>
+							<DatePicker
+								onChange={this.handleFirstDateChange}
+								value={this.state.firstDate}
+					        />
+					    </div>
+					    <div className='form__date-time'>
+					        <ControlLabel>Время</ControlLabel>
+							<FormControl
+								placeholder='14:00'
+								inputRef={ref => { this.fromTime = ref; }}
+							/>
+						</div>
 				    </div>
 				</div>
 
@@ -324,6 +328,24 @@ class OrderForm extends Component {
 							onChange={this.handleToPhone}
 						/>
 					</FormGroup>
+					<div className='form__date'>
+						<div className='form__date-day'>
+							<div className='form__date-label'>
+								День
+							</div>
+							<DatePicker
+								onChange={this.handleSecondDateChange}
+								value={this.state.secondDate}
+					        />
+					    </div>
+					    <div className='form__date-time'>
+					        <ControlLabel>Время</ControlLabel>
+							<FormControl
+								placeholder='14:00'
+								inputRef={ref => { this.toTime = ref; }}
+							/>
+						</div>
+				    </div>
 				</div>
 
 				<div className='form__section form__section_center'>
