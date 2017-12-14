@@ -10,10 +10,7 @@ import {
 	Panel
 } from 'react-bootstrap';
 
-import moment from 'moment';
-import 'moment/locale/ru';
-import InputMoment from 'input-moment';
-import 'input-moment/dist/input-moment.css'
+import DatePicker from 'react-date-picker';
 
 import './Form.css';
 
@@ -25,10 +22,8 @@ class OrderForm extends Component {
 			loading: false,
 			showModal: false,
 			showSuccessModal: false,
-			openFirstDate: false,
-			openSecondDate: false,
-			firstDate: moment().locale('ru'),
-			secondDate: moment().locale('ru'),
+			firstDate: new Date(),
+			secondDate: new Date(),
 			from: {
 				address: null,
 				phone: null
@@ -100,12 +95,12 @@ class OrderForm extends Component {
     		from: {
     			address: this.from ? this.from.value : '',
     			phone: this.fromPhone ? this.fromPhone.value : '',
-    			date: this.state.firstDate.format('LLLL')
+    			date: this.state.firstDate.toLocaleDateString()
     		},
     		to: {
     			address: this.to ? this.to.value : '',
     			phone: this.toPhone ? this.toPhone.value : '',
-    			date: this.state.secondDate.format('LLLL')
+    			date: this.state.secondDate.toLocaleDateString()
     		},
     		email: this.email ? this.email.value : '',
     		info: this.info ? this.info.value : ''
@@ -198,7 +193,7 @@ class OrderForm extends Component {
 	}
 
 	isDateValid() {
-		const now = moment().locale('ru');
+		const now = new Date();
 		return this.state.firstDate > now &&
 			this.state.secondDate > now &&
 			this.state.secondDate > this.state.firstDate;
@@ -230,7 +225,7 @@ class OrderForm extends Component {
 						    	{this.fromPhone ? this.fromPhone.value : ''}
 						    </Panel>
 						    <Panel header='Дата'>
-						    	{this.state.firstDate.format('LLLL')}
+						    	{this.state.firstDate && this.state.firstDate.toLocaleDateString()}
 						    </Panel>
 					    </Panel>
 					    <Panel header='Куда' bsStyle='primary'>
@@ -241,7 +236,7 @@ class OrderForm extends Component {
 						    	{this.toPhone ? this.toPhone.value : ''}
 						    </Panel>
 						    <Panel header='Дата'>
-						    	{this.state.secondDate.format('LLLL')}
+						    	{this.state.secondDate && this.state.secondDate.toLocaleDateString()}
 						    </Panel>
 					    </Panel>
 					    <Panel header='Информация о заказе' bsStyle='primary'>
@@ -292,34 +287,12 @@ class OrderForm extends Component {
 							onChange={this.handleFromPhone}
 						/>
 					</FormGroup>
-					<FormGroup
-						controlId='time'
-						className='form__date'
-						validationState={this.state.dateValid}
-					>
-						<ControlLabel>Дата</ControlLabel>
-						<FormControl
-							type='text'
-							placeholder='Вторник, 12 ноября'
-							onClick={() => this.setState({
-								openFirstDate: !this.state.openFirstDate,
-								openSecondDate: false
-							})}
-							value={this.state.firstDate.format('lll')}
-							onChange={() => {}}
-						/>
-						<div className='form__date-wrap'>
-							{this.state.openFirstDate ?
-								<InputMoment
-									moment={this.state.firstDate}
-									onChange={this.handleFirstDateChange}
-									minStep={10}
-		            				onSave={this.handleFirstDateSave}
-								/> :
-								null
-							}
-						</div>
-					</FormGroup>
+					<div className='form__date'>
+						<DatePicker
+							onChange={this.handleFirstDateChange}
+							value={this.state.firstDate}
+				        />
+				    </div>
 				</div>
 
 				<div className='form__section'>
@@ -350,34 +323,6 @@ class OrderForm extends Component {
 							value={this.state.toPhoneValue}
 							onChange={this.handleToPhone}
 						/>
-					</FormGroup>
-					<FormGroup
-						controlId='time'
-						className='form__date'
-						validationState={this.state.dateValid}
-					>
-						<ControlLabel>Дата</ControlLabel>
-						<FormControl
-							type='text'
-							placeholder='Среда, 13 ноября'
-							onClick={() => this.setState({
-								openSecondDate: !this.state.openSecondDate,
-								openFirstDate: false
-							})}
-							value={this.state.secondDate.format('lll')}
-							onChange={() => {}}
-						/>
-						<div className='form__date-wrap'>
-							{this.state.openSecondDate ?
-								<InputMoment
-									moment={this.state.secondDate}
-									onChange={this.handleSecondDateChange}
-									minStep={10}
-		            				onSave={this.handleSecondDateSave}
-								/> :
-								null
-							}
-						</div>
 					</FormGroup>
 				</div>
 
