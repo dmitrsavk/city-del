@@ -10,10 +10,7 @@ import {
 	Panel
 } from 'react-bootstrap';
 
-import moment from 'moment';
-import 'moment/locale/ru';
-import InputMoment from 'input-moment';
-import 'input-moment/dist/input-moment.css'
+import DatePicker from 'react-date-picker';
 
 import './Form.css';
 
@@ -25,10 +22,8 @@ class OrderForm extends Component {
 			loading: false,
 			showModal: false,
 			showSuccessModal: false,
-			openFirstDate: false,
-			openSecondDate: false,
-			firstDate: moment().locale('ru'),
-			secondDate: moment().locale('ru'),
+			firstDate: new Date(),
+			secondDate: new Date(),
 			from: {
 				address: null,
 				phone: null
@@ -40,15 +35,14 @@ class OrderForm extends Component {
 			email: null,
 			fromPhoneValue: '',
 			toPhoneValue: '',
-			dateValid: null,
 			emailValid: null,
-			orderNumber: null
+			orderNumber: null,
+			dateValid: true
 		}
 
 		this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
 		this.handleFirstDateChange = this.handleFirstDateChange.bind(this);
-		this.handleSecondDateSave = this.handleSecondDateSave.bind(this);
-		this.handleFirstDateSave = this.handleFirstDateSave.bind(this);
+
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.hideModal = this.hideModal.bind(this);
 		this.showModal = this.showModal.bind(this);
@@ -65,14 +59,6 @@ class OrderForm extends Component {
 
 	handleFirstDateChange(moment) {
 		this.setState({firstDate: moment});
-	}
-
-	handleSecondDateSave(moment) {
-		this.setState({openSecondDate: !this.state.openSecondDate});
-	}
-
-	handleFirstDateSave(moment) {
-		this.setState({openFirstDate: !this.state.openFirstDate});
 	}
 
 	handleSubmit(event) {
@@ -100,16 +86,18 @@ class OrderForm extends Component {
     		from: {
     			address: this.from ? this.from.value : '',
     			phone: this.fromPhone ? this.fromPhone.value : '',
-    			date: this.state.firstDate.format('LLLL')
+    			date: this.getFirstFullTime()
     		},
     		to: {
     			address: this.to ? this.to.value : '',
     			phone: this.toPhone ? this.toPhone.value : '',
-    			date: this.state.secondDate.format('LLLL')
+    			date: this.getSecondFullTime()
     		},
     		email: this.email ? this.email.value : '',
     		info: this.info ? this.info.value : ''
     	};
+
+    	console.log(data);
 
 	    fetch('http://citydeliver.ru:3001', {
 	    	method: 'post',
@@ -144,7 +132,7 @@ class OrderForm extends Component {
     			address: toAddressIsValid ? null : 'error',
     			phone: toPhoneIsValid ? null : 'error'
     		},
-    		dateValid: dateIsValid ? null : 'error',
+    		dateValid: dateIsValid,
     		emailValid: emailIsValid ? null : 'error'
     	});
 
@@ -198,10 +186,19 @@ class OrderForm extends Component {
 	}
 
 	isDateValid() {
-		const now = moment().locale('ru');
-		return this.state.firstDate > now &&
-			this.state.secondDate > now &&
-			this.state.secondDate > this.state.firstDate;
+		return this.state.firstDate && this.state.secondDate;
+	}
+
+	getFirstFullTime() {
+		const day = this.state.firstDate && this.state.firstDate.toLocaleDateString();
+		const time = this.fromTime ? this.fromTime.value : '';
+		return `${day} - ${time}`;
+	}
+
+	getSecondFullTime() {
+		const day = this.state.secondDate && this.state.secondDate.toLocaleDateString();
+		const time = this.toTime ? this.toTime.value : '';
+		return `${day} - ${time}`;
 	}
 
 	render() {
@@ -214,7 +211,7 @@ class OrderForm extends Component {
 					<Modal.Body>
 						Спасибо за заявку!<br/>
 						Номер заказа - <b>{this.state.orderNumber}</b><br/>
-						В течении 5 минут, с вами свяжется диспетчер 
+						В течении 5 минут, с вами свяжется диспетчер
 					</Modal.Body>
 				</Modal>
 				<Modal show={this.state.showModal} onHide={this.hideModal}>
@@ -230,7 +227,7 @@ class OrderForm extends Component {
 						    	{this.fromPhone ? this.fromPhone.value : ''}
 						    </Panel>
 						    <Panel header='Дата'>
-						    	{this.state.firstDate.format('LLLL')}
+						    	{this.getFirstFullTime()}
 						    </Panel>
 					    </Panel>
 					    <Panel header='Куда' bsStyle='primary'>
@@ -241,7 +238,7 @@ class OrderForm extends Component {
 						    	{this.toPhone ? this.toPhone.value : ''}
 						    </Panel>
 						    <Panel header='Дата'>
-						    	{this.state.secondDate.format('LLLL')}
+						    	{this.getSecondFullTime()}
 						    </Panel>
 					    </Panel>
 					    <Panel header='Информация о заказе' bsStyle='primary'>
@@ -292,34 +289,26 @@ class OrderForm extends Component {
 							onChange={this.handleFromPhone}
 						/>
 					</FormGroup>
-					<FormGroup
-						controlId='time'
-						className='form__date'
-						validationState={this.state.dateValid}
-					>
-						<ControlLabel>Дата</ControlLabel>
-						<FormControl
-							type='text'
-							placeholder='Вторник, 12 ноября'
-							onClick={() => this.setState({
-								openFirstDate: !this.state.openFirstDate,
-								openSecondDate: false
-							})}
-							value={this.state.firstDate.format('lll')}
-							onChange={() => {}}
-						/>
-						<div className='form__date-wrap'>
-							{this.state.openFirstDate ?
-								<InputMoment
-									moment={this.state.firstDate}
-									onChange={this.handleFirstDateChange}
-									minStep={10}
-		            				onSave={this.handleFirstDateSave}
-								/> :
-								null
-							}
+					<div className='form__date'>
+						<div className='form__date-day'
+							valid={this.state.dateValid ? 'valid' : 'invalid'}
+						>
+							<div className='form__date-label'>
+								День
+							</div>
+							<DatePicker
+								onChange={this.handleFirstDateChange}
+								value={this.state.firstDate}
+					        />
+					    </div>
+					    <div className='form__date-time'>
+					        <ControlLabel>Время</ControlLabel>
+							<FormControl
+								placeholder='14:00'
+								inputRef={ref => { this.fromTime = ref; }}
+							/>
 						</div>
-					</FormGroup>
+				    </div>
 				</div>
 
 				<div className='form__section'>
@@ -351,34 +340,26 @@ class OrderForm extends Component {
 							onChange={this.handleToPhone}
 						/>
 					</FormGroup>
-					<FormGroup
-						controlId='time'
-						className='form__date'
-						validationState={this.state.dateValid}
-					>
-						<ControlLabel>Дата</ControlLabel>
-						<FormControl
-							type='text'
-							placeholder='Среда, 13 ноября'
-							onClick={() => this.setState({
-								openSecondDate: !this.state.openSecondDate,
-								openFirstDate: false
-							})}
-							value={this.state.secondDate.format('lll')}
-							onChange={() => {}}
-						/>
-						<div className='form__date-wrap'>
-							{this.state.openSecondDate ?
-								<InputMoment
-									moment={this.state.secondDate}
-									onChange={this.handleSecondDateChange}
-									minStep={10}
-		            				onSave={this.handleSecondDateSave}
-								/> :
-								null
-							}
+					<div className='form__date'>
+						<div className='form__date-day'
+							valid={this.state.dateValid ? 'valid' : 'invalid'}
+						>
+							<div className='form__date-label'>
+								День
+							</div>
+							<DatePicker
+								onChange={this.handleSecondDateChange}
+								value={this.state.secondDate}
+					        />
+					    </div>
+					    <div className='form__date-time'>
+					        <ControlLabel>Время</ControlLabel>
+							<FormControl
+								placeholder='14:00'
+								inputRef={ref => { this.toTime = ref; }}
+							/>
 						</div>
-					</FormGroup>
+				    </div>
 				</div>
 
 				<div className='form__section form__section_center'>
