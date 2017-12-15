@@ -35,14 +35,14 @@ class OrderForm extends Component {
 			email: null,
 			fromPhoneValue: '',
 			toPhoneValue: '',
-			dateValid: null,
 			emailValid: null,
-			orderNumber: null
+			orderNumber: null,
+			dateValid: true
 		}
 
 		this.handleSecondDateChange = this.handleSecondDateChange.bind(this);
 		this.handleFirstDateChange = this.handleFirstDateChange.bind(this);
-;
+
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.hideModal = this.hideModal.bind(this);
 		this.showModal = this.showModal.bind(this);
@@ -86,16 +86,18 @@ class OrderForm extends Component {
     		from: {
     			address: this.from ? this.from.value : '',
     			phone: this.fromPhone ? this.fromPhone.value : '',
-    			date: this.state.firstDate.toLocaleDateString()
+    			date: this.getFirstFullTime()
     		},
     		to: {
     			address: this.to ? this.to.value : '',
     			phone: this.toPhone ? this.toPhone.value : '',
-    			date: this.state.secondDate.toLocaleDateString()
+    			date: this.getSecondFullTime()
     		},
     		email: this.email ? this.email.value : '',
     		info: this.info ? this.info.value : ''
     	};
+
+    	console.log(data);
 
 	    fetch('http://citydeliver.ru:3001', {
 	    	method: 'post',
@@ -130,7 +132,7 @@ class OrderForm extends Component {
     			address: toAddressIsValid ? null : 'error',
     			phone: toPhoneIsValid ? null : 'error'
     		},
-    		dateValid: dateIsValid ? null : 'error',
+    		dateValid: dateIsValid,
     		emailValid: emailIsValid ? null : 'error'
     	});
 
@@ -184,11 +186,19 @@ class OrderForm extends Component {
 	}
 
 	isDateValid() {
-		const now = new Date();
+		return this.state.firstDate && this.state.secondDate;
+	}
 
-		return this.state.firstDate > now &&
-			this.state.secondDate > now &&
-			this.state.secondDate > this.state.firstDate;
+	getFirstFullTime() {
+		const day = this.state.firstDate && this.state.firstDate.toLocaleDateString();
+		const time = this.fromTime ? this.fromTime.value : '';
+		return `${day} - ${time}`;
+	}
+
+	getSecondFullTime() {
+		const day = this.state.secondDate && this.state.secondDate.toLocaleDateString();
+		const time = this.toTime ? this.toTime.value : '';
+		return `${day} - ${time}`;
 	}
 
 	render() {
@@ -201,7 +211,7 @@ class OrderForm extends Component {
 					<Modal.Body>
 						Спасибо за заявку!<br/>
 						Номер заказа - <b>{this.state.orderNumber}</b><br/>
-						В течении 5 минут, с вами свяжется диспетчер 
+						В течении 5 минут, с вами свяжется диспетчер
 					</Modal.Body>
 				</Modal>
 				<Modal show={this.state.showModal} onHide={this.hideModal}>
@@ -217,7 +227,7 @@ class OrderForm extends Component {
 						    	{this.fromPhone ? this.fromPhone.value : ''}
 						    </Panel>
 						    <Panel header='Дата'>
-						    	{this.state.firstDate && this.state.firstDate.toLocaleDateString()}
+						    	{this.getFirstFullTime()}
 						    </Panel>
 					    </Panel>
 					    <Panel header='Куда' bsStyle='primary'>
@@ -228,7 +238,7 @@ class OrderForm extends Component {
 						    	{this.toPhone ? this.toPhone.value : ''}
 						    </Panel>
 						    <Panel header='Дата'>
-						    	{this.state.secondDate && this.state.secondDate.toLocaleDateString()}
+						    	{this.getSecondFullTime()}
 						    </Panel>
 					    </Panel>
 					    <Panel header='Информация о заказе' bsStyle='primary'>
@@ -280,7 +290,9 @@ class OrderForm extends Component {
 						/>
 					</FormGroup>
 					<div className='form__date'>
-						<div className='form__date-day'>
+						<div className='form__date-day'
+							valid={this.state.dateValid ? 'valid' : 'invalid'}
+						>
 							<div className='form__date-label'>
 								День
 							</div>
@@ -329,7 +341,9 @@ class OrderForm extends Component {
 						/>
 					</FormGroup>
 					<div className='form__date'>
-						<div className='form__date-day'>
+						<div className='form__date-day'
+							valid={this.state.dateValid ? 'valid' : 'invalid'}
+						>
 							<div className='form__date-label'>
 								День
 							</div>

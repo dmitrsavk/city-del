@@ -106,6 +106,10 @@
 	border: 1px solid #cccccc !important;
 }
 
+.form__date-day[valid="invalid"] .react-date-picker__button {
+	border: 1px solid #ff0039 !important;
+}
+
 @media screen and (max-width: 700px) {
 	.form__section {
 		box-sizing: border-box;
