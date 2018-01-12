@@ -14,7 +14,7 @@ class Address extends Component {
     render() {
         const {index, addresses, handleChangingAddress} = this.props;
 
-        const {address, phone, day, time} = addresses[index];
+        const {address, phone, day, time, note} = addresses[index];
 
         return (
             <div className='form__section'>
@@ -46,7 +46,7 @@ class Address extends Component {
                     />
                 </FormGroup>
 
-                <div className='form__date'>
+                <div className='form__date form-group'>
                     <div className='form__date-day'>
                         <div className='form__date-label'>
                             День
@@ -65,6 +65,19 @@ class Address extends Component {
                         />
                     </div>
                 </div>
+
+                <FormGroup
+                    controlId='note'
+                    className='form__note'
+                >
+                    <ControlLabel>Примечание</ControlLabel>
+                    <FormControl
+                        type='text'
+                        placeholder='Отсюда нужно будет забрать пиццу'
+                        value={note}
+                        onChange={handleChangingAddress.bind(null, index, 'note')}
+                    />
+                </FormGroup>
             </div>
         );
     }

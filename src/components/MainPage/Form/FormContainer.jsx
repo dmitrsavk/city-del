@@ -33,7 +33,8 @@ class FormContainer extends Component {
             address: '',
             phone: '',
             day: new Date(),
-            time: ''
+            time: '',
+            note: ''
         };
     }
 
@@ -160,7 +161,8 @@ class FormContainer extends Component {
         return this.state.addresses.map(address => ({
             address: address.address,
             phone: address.phone,
-            date: this.getDate(address.day, address.time)
+            date: this.getDate(address.day, address.time),
+            note: address.note
         }));
     }
 

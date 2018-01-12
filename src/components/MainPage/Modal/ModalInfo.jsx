@@ -16,6 +16,9 @@ class ModalInfo extends Component {
                 <Panel header='Дата'>
                     {this.getDate(address.day, address.time)}
                 </Panel>
+                <Panel header='Примечание'>
+                    {address.note}
+                </Panel>
             </Panel>
         );
     }
