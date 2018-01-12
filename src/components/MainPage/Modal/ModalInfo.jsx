@@ -24,9 +24,21 @@ class ModalInfo extends Component {
         return `${day.toLocaleDateString()} - ${time}`;
     }
 
+    getAddresses() {
+        const addresses = this.props.addresses;
+
+        let result = null;
+
+        if (addresses) {
+            result = addresses.map((address, index) => this.getAddress(address, index))
+        }
+
+        return result;
+    }
+
     render() {
         const {showInfoModal, hideInfoModal, loading, send,
-                addresses, email, information} = this.props;
+            email, information} = this.props;
 
         return (
             <Modal show={showInfoModal} onHide={hideInfoModal}>
@@ -34,7 +46,7 @@ class ModalInfo extends Component {
                     <Modal.Title>Подтвердите заявку</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {addresses.map((address, index) => this.getAddress(address, index))}
+                    {this.getAddresses()}
 
                     <Panel header='Информация о заказе' bsStyle='primary'>
                         <Panel header='Email'>

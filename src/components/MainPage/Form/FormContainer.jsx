@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import Form from './Form';
-import ModalInfo from './ModalInfo';
-import ModalSuccess from './ModalSuccess';
+import ModalInfo from '../Modal/ModalInfo';
+import ModalSuccess from '../Modal/ModalSuccess';
 
 
 class FormContainer extends Component {
@@ -112,8 +112,6 @@ class FormContainer extends Component {
 
         const data = this.getRequestData();
 
-        console.log(data);
-
         fetch('http://citydeliver.ru:3001', {
             method: 'post',
             body: JSON.stringify(data),
@@ -136,6 +134,7 @@ class FormContainer extends Component {
 
     getRequestData() {
         return {
+            type: 'private',
             orderNumber: this.getRandomOrderNumber(),
             addresses: this.getFormattedAddresses(),
             email: this.state.email,
