@@ -14,6 +14,59 @@ app.use(function(req, res, next) {
     next();
 });
 
+const getMailOptions = (data) => {
+    let subject;
+    let html;
+
+    if (data.type == 'public') {
+        subject = 'Сотрудничество по бизнесу';
+        html = getHTMLForPublic(data);
+    } else {
+        subject = 'Заявка на доставку';
+        html = getHTMLForPrivate(data);
+    }
+
+    mailOptions = {
+        from: 'support@citydeliver.ru',
+        to: 'dmitrsavk@citydeliver.ru',
+        subject: subject,
+        text: '',
+        html: html
+    };
+
+    return mailOptions;
+}
+
+const getHTMLForPrivate = (data) => {
+    const addresses = '';
+
+    data.addresses.forEach((address, index) => {
+        addresses += `
+            <b>Адрес №${index + 1}:</b>
+            <b>Адрес: </b>${address.address}
+            <b>Телефон: </b>${address.phone}
+            <b>Дата: </b>${address.date}
+            <b>Примечание: </b>${address.note}
+        `;
+    });
+
+    return `
+        <b>Номер заказа: </b>${data.orderNumber}<br/>
+        ${addresses}<br/>
+        <b>Дополнительная информация:</b><br />
+                email: ${data.email}<br/>
+                Описание: ${data.info}<br/>
+    `;
+}
+
+const getHTMLForPublic = (data) => {
+    return `
+        <b>Сотрудничество по бизнесу</b><br/>
+        <b>Email: </b></br>${data.email}<br/>
+        <b>Информация: </b>${data.information}<br/>
+    `;
+}
+
 const sendMail = (req, res) => {
     let transporter = nodemailer.createTransport({
         host: 'smtp.yandex.ru',
@@ -25,26 +78,7 @@ const sendMail = (req, res) => {
         }
     });
 
-    let mailOptions = {
-        from: 'support@citydeliver.ru',
-        to: 'support@citydeliver.ru',
-        subject: 'Заявка',
-        text: '',
-        html: `
-            <b>Номер заказа:</b> ${req.body.orderNumber}<br/>
-            <b>Откуда:</b><br />
-                Адрес: ${req.body.from.address}<br />
-                Телефон: ${req.body.from.phone}<br />
-                Дата: ${req.body.from.date}<br /><br />
-            <b>Куда:</b><br />
-                Адрес: ${req.body.to.address}<br />
-                Телефон: ${req.body.to.phone}<br />
-                Дата: ${req.body.to.date}<br /><br />
-            Дополнительная информация:<br />
-                email: ${req.body.email}<br/>
-                Описание: ${req.body.info}
-        `
-    };
+    let mailOptions = getMailOptions(req.body);
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
