@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yarn
+yarn upgrade
 yarn build
 rm -rf /var/www/build_old/
 mv /var/www/build/ /var/www/build_old/
