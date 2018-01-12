@@ -5,9 +5,7 @@ import {
 	ControlLabel,
 	FormControl,
 	Button,
-	Form,
-	Modal,
-	Panel
+	Form
 } from 'react-bootstrap';
 
 import './Form.css';
@@ -18,7 +16,8 @@ const ROOT_CSS_CLASS = 'form';
 
 class OrderForm extends Component {
 	render() {
-		const {handleSubmit, addresses, handleAddingAddress, handleChangingAddress, handleDeletingAddress} = this.props;
+		const {handleSubmit, addresses, handleAddingAddress, handleDeletingAddress,
+			handleChangingEmail, handleChangingInformation, email, information} = this.props;
 
 		const deleteButton = addresses.length > 2 ?
 			<Button onClick={handleDeletingAddress}>Удалить адрес</Button> : null;
@@ -52,6 +51,8 @@ class OrderForm extends Component {
 						<FormControl
 							type='email'
 							placeholder='support@citydeliver.ru'
+							value={email}
+							onChange={handleChangingEmail}
 						/>
 					</FormGroup>
 
@@ -63,16 +64,14 @@ class OrderForm extends Component {
 							className='form__info'
 							componentClass='textarea'
 							placeholder='За час до прибытия курьера позвоните. Будьте аккуратнее, хрупкий товар'
+							value={information}
+							onChange={handleChangingInformation}
 						/>
 					</FormGroup>
 
-					<div className='form__button-wrap'>
+					<div className={`${ROOT_CSS_CLASS}__button-wrap`}>
 						<Button type='submit'>Отправить заявку</Button>
 					</div>
-				</div>
-
-				<div className={`${ROOT_CSS_CLASS}__button-wrap`}>
-					<Button type='submit'>Отправить заявку</Button>
 				</div>
 			</Form>
 		);

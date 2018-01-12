@@ -10,8 +10,6 @@ import DatePicker from 'react-date-picker';
 
 import './Address.css';
 
-const ROOT_CSS_CLASS = 'address';
-
 class Address extends Component {
     render() {
         const {index, addresses, handleChangingAddress} = this.props;
@@ -20,7 +18,7 @@ class Address extends Component {
 
         return (
             <div className='form__section'>
-                <div className='form__label'>Адрес #{index + 1}</div>
+                <div className='form__label'>Адрес №{index + 1}</div>
 
                 <FormGroup
                     controlId='address'
