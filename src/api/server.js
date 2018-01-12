@@ -46,16 +46,16 @@ const getHTMLForPrivate = (data) => {
             <b>Адрес: </b>${address.address}<br/>
             <b>Телефон: </b>${address.phone}<br/>
             <b>Дата: </b>${address.date}<br/>
-            <b>Примечание: </b>${address.note}<br/>
+            <b>Примечание: </b>${address.note}<br/><br/>
         `;
     });
 
     return `
-        <b>Номер заказа: </b>${data.orderNumber}<br/>
-        ${addresses}<br/>
+        <b>Номер заказа: </b>${data.orderNumber}<br/><br/>
+        ${addresses}
         <b>Дополнительная информация:</b><br />
                 email: ${data.email}<br/>
-                Описание: ${data.info}<br/>
+                Описание: ${data.information}<br/>
     `;
 }
 
