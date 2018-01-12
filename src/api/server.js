@@ -28,7 +28,7 @@ const getMailOptions = (data) => {
 
     mailOptions = {
         from: 'support@citydeliver.ru',
-        to: 'dmitrsavk@citydeliver.ru',
+        to: 'support@citydeliver.ru',
         subject: subject,
         text: '',
         html: html
