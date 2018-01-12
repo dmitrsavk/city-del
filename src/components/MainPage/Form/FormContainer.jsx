@@ -153,6 +153,8 @@ class FormContainer extends Component {
         orderNumber = orderNumber.toString();
         orderNumber = orderNumber.slice(0, 3) + ' ' + orderNumber.slice(3);
 
+        this.setState({orderNumber})
+
         return orderNumber;
     }
 

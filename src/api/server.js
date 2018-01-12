@@ -38,15 +38,15 @@ const getMailOptions = (data) => {
 }
 
 const getHTMLForPrivate = (data) => {
-    const addresses = '';
+    let addresses = '';
 
     data.addresses.forEach((address, index) => {
         addresses += `
-            <b>Адрес №${index + 1}:</b>
-            <b>Адрес: </b>${address.address}
-            <b>Телефон: </b>${address.phone}
-            <b>Дата: </b>${address.date}
-            <b>Примечание: </b>${address.note}
+            <b>Адрес №${index + 1}:</b><br/>
+            <b>Адрес: </b>${address.address}<br/>
+            <b>Телефон: </b>${address.phone}<br/>
+            <b>Дата: </b>${address.date}<br/>
+            <b>Примечание: </b>${address.note}<br/>
         `;
     });
 
